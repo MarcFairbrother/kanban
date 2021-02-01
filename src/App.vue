@@ -6,11 +6,15 @@
 
 <script>
 import AllLists from '@/components/AllLists.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     AllLists,
+  },
+  methods: {
+    ...mapActions(['setData']),
   },
   mounted() {
     // check local storage for existing data
@@ -20,7 +24,7 @@ export default {
       this.setData(savedData);
     } else {
       // or set up store with default data
-      this.$store.dispatch('setData', [
+      this.setData([
         {
           title: 'My List',
           position: '1',
