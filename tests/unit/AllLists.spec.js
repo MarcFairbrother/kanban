@@ -14,7 +14,7 @@ describe('AllLists.vue', () => {
     });
     const wrapper = shallowMount(AllLists, { store, localVue });
 
-    expect(wrapper.find('li.lists__item').html()).toContain('data-position="1"');
+    expect(wrapper.find('li.lists__item--list').html()).toContain('data-position="1"');
   });
 
   it('renders two li elements when state includes two lists', () => {
@@ -25,8 +25,8 @@ describe('AllLists.vue', () => {
     });
     const wrapper = shallowMount(AllLists, { store, localVue });
 
-    expect(wrapper.find('li.lists__item[data-position="1"]').exists()).toBe(true);
-    expect(wrapper.find('li.lists__item[data-position="2"]').exists()).toBe(true);
+    expect(wrapper.find('li.lists__item--list[data-position="1"]').exists()).toBe(true);
+    expect(wrapper.find('li.lists__item--list[data-position="2"]').exists()).toBe(true);
   });
 
   it('renders no li elements when state includes zero lists', () => {
@@ -37,6 +37,19 @@ describe('AllLists.vue', () => {
     });
     const wrapper = shallowMount(AllLists, { store, localVue });
 
-    expect(wrapper.find('li.lists__item').exists()).toBe(false);
+    expect(wrapper.find('li.lists__item--list').exists()).toBe(false);
+  });
+
+  it('dispatches addNewList action when button is clicked', async () => {
+    const store = new Vuex.Store({
+      getters: {
+        getLists: () => [],
+      },
+    });
+    const addNewList = jest.fn();
+    const wrapper = shallowMount(AllLists, { methods: { addNewList }, store, localVue });
+
+    await wrapper.find('button.js-addNewList').trigger('click');
+    expect(addNewList).toHaveBeenCalledWith({ title: 'New List', items: [] });
   });
 });
