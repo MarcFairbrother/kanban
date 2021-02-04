@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations';
 
-const { setData, addNewList } = mutations;
+const { setData, addNewList, updateListTitle } = mutations;
 
 describe('mutations.js', () => {
   // setData
@@ -32,5 +32,25 @@ describe('mutations.js', () => {
     const payload = [{ foo: 'baz' }];
     addNewList(state, payload);
     expect(state.lists[state.lists.length - 1].position).toEqual(state.lists.length);
+  });
+
+  it('calls updateLocalStorage function', () => {
+    const state = {
+      lists: [{ foo: 'bar', position: 1 }],
+    };
+    const payload = [{ foo: 'baz' }];
+    const updateLocalStorage = jest.fn();
+    addNewList(state, payload);
+    expect(updateLocalStorage).toHaveBeenCalledWith('lists', state.lists);
+  });
+
+  // updateListTitle
+  it('updates the list title', () => {
+    const state = {
+      lists: [{ title: 'foo', position: 1 }],
+    };
+    const payload = { newTitle: 'bar', position: 1 };
+    updateListTitle(state, payload);
+    expect(state.lists[0].title).toEqual('bar');
   });
 });

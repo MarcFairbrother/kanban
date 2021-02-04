@@ -52,4 +52,20 @@ describe('AllLists.vue', () => {
     await wrapper.find('button.js-addNewList').trigger('click');
     expect(addNewList).toHaveBeenCalledWith({ title: 'New List', items: [] });
   });
+
+  it('dispatches updateListTitle when title element is edited', async () => {
+    const store = new Vuex.Store({
+      getters: {
+        getLists: () => [{ title: 'List', position: 1 }],
+      },
+    });
+    const handleTitleEdit = jest.fn((e) => updateListTitle({ newTitle: e.input.target.innerText, position: 1 }));
+    const updateListTitle = jest.fn();
+    const wrapper = shallowMount(AllLists, { methods: { updateListTitle, handleTitleEdit }, store, localVue });
+    const e = { input: { target: { innerText: 'foo' } } };
+
+    await wrapper.find('h2').trigger('blur', e);
+    expect(handleTitleEdit).toHaveBeenCalledTimes(1);
+    expect(updateListTitle).toHaveBeenCalledWith({ newTitle: 'foo', position: 1 });
+  });
 });

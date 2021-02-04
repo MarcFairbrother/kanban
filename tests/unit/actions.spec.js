@@ -1,6 +1,6 @@
 import actions from '@/store/actions';
 
-const { setData, addNewList } = actions;
+const { setData, addNewList, updateListTitle } = actions;
 
 describe('actions.js', () => {
   const commit = jest.fn();
@@ -17,5 +17,12 @@ describe('actions.js', () => {
     const payload = 'foo';
     addNewList({ commit }, payload);
     expect(commit).toHaveBeenCalledWith('addNewList', 'foo');
+  });
+
+  // updateListTitle
+  it('commits updateListTitle', () => {
+    const payload = { newTitle: 'foo', position: 1 };
+    updateListTitle({ commit }, payload);
+    expect(commit).toHaveBeenCalledWith('updateListTitle', { newTitle: 'foo', position: 1 });
   });
 });
