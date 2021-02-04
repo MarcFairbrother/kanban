@@ -34,16 +34,6 @@ describe('mutations.js', () => {
     expect(state.lists[state.lists.length - 1].position).toEqual(state.lists.length);
   });
 
-  it('calls updateLocalStorage function', () => {
-    const state = {
-      lists: [{ foo: 'bar', position: 1 }],
-    };
-    const payload = [{ foo: 'baz' }];
-    const updateLocalStorage = jest.fn();
-    addNewList(state, payload);
-    expect(updateLocalStorage).toHaveBeenCalledWith('lists', state.lists);
-  });
-
   // updateListTitle
   it('updates the list title', () => {
     const state = {

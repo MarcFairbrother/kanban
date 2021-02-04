@@ -7,6 +7,7 @@ const setData = (state, payload) => {
 const addNewList = (state, payload) => {
   payload.position = state.lists.length + 1;
   state.lists.push(payload);
+  // in real world app db should be updated by action
   updateLocalStorage('lists', state.lists);
 };
 
@@ -16,6 +17,7 @@ const updateListTitle = (state, payload) => {
       list.title = payload.newTitle;
     }
   });
+  // in real world app db should be updated by action
   updateLocalStorage('lists', state.lists);
 };
 
