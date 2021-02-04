@@ -21,7 +21,7 @@ export default {
     const savedData = localStorage.getItem('lists');
     if (savedData) {
       // update store with existing data
-      this.setData(savedData);
+      this.setData(JSON.parse(savedData));
     } else {
       // or set up store with default data
       this.setData([
