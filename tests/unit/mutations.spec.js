@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations';
 
-const { setData, addNewList, updateListTitle } = mutations;
+const { setData, addNewList, updateListTitle, deleteList } = mutations;
 
 describe('mutations.js', () => {
   // setData
@@ -42,5 +42,22 @@ describe('mutations.js', () => {
     const payload = { newTitle: 'bar', position: 1 };
     updateListTitle(state, payload);
     expect(state.lists[0].title).toEqual('bar');
+  });
+
+  // deleteList
+  it('deletes the list with corresponding position and updates the position of other lists', () => {
+    const state = {
+      lists: [
+        { title: 'foo', position: 1 },
+        { title: 'bar', position: 2 },
+        { title: 'baz', position: 3 },
+      ],
+    };
+    const payload = 2;
+    deleteList(state, payload);
+    expect(state.lists).toEqual([
+      { title: 'foo', position: 1 },
+      { title: 'baz', position: 2 },
+    ]);
   });
 });

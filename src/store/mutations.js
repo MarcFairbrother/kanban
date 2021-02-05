@@ -21,8 +21,22 @@ const updateListTitle = (state, payload) => {
   updateLocalStorage('lists', state.lists);
 };
 
+const deleteList = (state, payload) => {
+  // get index of list with target position
+  const indexToDelete = state.lists.map((list) => list.position).indexOf(payload);
+  // delete the list
+  state.lists.splice(indexToDelete, 1);
+  // decrement position of lists with a higher position
+  state.lists.forEach((list) => {
+    list.position > indexToDelete ? list.position-- : null;
+  });
+  // in real world app db should be updated by action
+  updateLocalStorage('lists', state.lists);
+};
+
 export default {
   setData,
   addNewList,
   updateListTitle,
+  deleteList,
 };

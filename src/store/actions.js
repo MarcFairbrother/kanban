@@ -10,8 +10,13 @@ const updateListTitle = ({ commit }, payload) => {
   commit('updateListTitle', payload);
 };
 
+const deleteList = ({ commit }, payload) => {
+  commit('deleteList', payload);
+};
+
 export default {
   setData,
   addNewList,
   updateListTitle,
+  deleteList,
 };
