@@ -34,9 +34,15 @@ const deleteList = (state, payload) => {
   updateLocalStorage('lists', state.lists);
 };
 
+const newCard = (state, payload) => {
+  state.showForm = true;
+  state.selectedList = payload;
+};
+
 export default {
   setData,
   addNewList,
   updateListTitle,
   deleteList,
+  newCard,
 };

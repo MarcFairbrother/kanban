@@ -26,7 +26,7 @@ describe('SingeList.vue', () => {
     expect(wrapper.find('button.js-deleteList').exists()).toBe(false);
   });
 
-  it('dispatches deleteList when button is clicked', async () => {
+  it('calls handleDeleteList when button is clicked', async () => {
     const handleDeleteList = jest.fn();
     const wrapper = shallowMount(SingleList, {
       propsData: {
@@ -42,5 +42,23 @@ describe('SingeList.vue', () => {
 
     await wrapper.find('button.js-deleteList').trigger('click');
     expect(handleDeleteList).toHaveBeenCalledWith(1);
+  });
+
+  it('calls handleNewCard when button is clicked', async () => {
+    const handleNewCard = jest.fn();
+    const wrapper = shallowMount(SingleList, {
+      propsData: {
+        listData: {
+          position: 1,
+          items: [],
+        },
+      },
+      methods: {
+        handleNewCard,
+      },
+    });
+
+    await wrapper.find('button.js-newCard').trigger('click');
+    expect(handleNewCard).toHaveBeenCalledWith(1);
   });
 });

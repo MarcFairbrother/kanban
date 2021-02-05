@@ -9,6 +9,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     lists: [],
+    selectedList: null,
+    showForm: false,
   },
   actions,
   mutations,

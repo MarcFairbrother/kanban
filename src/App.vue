@@ -1,17 +1,25 @@
 <template>
   <main id="app">
     <AllLists />
+    <CreateCard v-if="showForm" class="createcard" />
   </main>
 </template>
 
 <script>
 import AllLists from '@/components/AllLists.vue';
+import CreateCard from '@/components/CreateCard.vue';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     AllLists,
+    CreateCard,
+  },
+  computed: {
+    showForm() {
+      return this.$store.state.showForm;
+    },
   },
   methods: {
     ...mapActions(['setData']),

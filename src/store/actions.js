@@ -14,9 +14,14 @@ const deleteList = ({ commit }, payload) => {
   commit('deleteList', payload);
 };
 
+const newCard = ({ commit }, payload) => {
+  commit('newCard', payload);
+};
+
 export default {
   setData,
   addNewList,
   updateListTitle,
   deleteList,
+  newCard,
 };

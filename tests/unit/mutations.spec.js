@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations';
 
-const { setData, addNewList, updateListTitle, deleteList } = mutations;
+const { setData, addNewList, updateListTitle, deleteList, newCard } = mutations;
 
 describe('mutations.js', () => {
   // setData
@@ -54,10 +54,32 @@ describe('mutations.js', () => {
       ],
     };
     const payload = 2;
+
     deleteList(state, payload);
     expect(state.lists).toEqual([
       { title: 'foo', position: 1 },
       { title: 'baz', position: 2 },
     ]);
+  });
+
+  // newCard
+  it('sets showModal to true', () => {
+    const state = {
+      showForm: false,
+    };
+    const payload = 1;
+
+    newCard(state, payload);
+    expect(state.showForm).toBe(true);
+  });
+
+  it('sets selected list to payload value', () => {
+    const state = {
+      selectedList: null,
+    };
+    const payload = 1;
+
+    newCard(state, payload);
+    expect(state.selectedList).toBe(1);
   });
 });

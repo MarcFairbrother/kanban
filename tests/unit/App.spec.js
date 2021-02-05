@@ -6,6 +6,9 @@ describe('App.vue', () => {
   const localVue = createLocalVue();
   localVue.use(Vuex);
   const store = new Vuex.Store({
+    state: {
+      showForm: true,
+    },
     actions: {
       setData: jest.fn(),
     },
@@ -14,5 +17,9 @@ describe('App.vue', () => {
 
   it('mounts the App component', () => {
     expect(wrapper).toBeTruthy();
+  });
+
+  it('displays card creation form', () => {
+    expect(wrapper.find('.createcard').exists()).toBe(true);
   });
 });
