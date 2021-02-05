@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     ...mapActions({ addNewList: 'addNewList', updateListTitle: 'updateListTitle' }),
-    handleTitleEdit: function(e, position) {
+    handleTitleEdit(e, position) {
       this.updateListTitle({ newTitle: e.target.innerText, position });
     },
   },
