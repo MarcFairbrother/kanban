@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations';
 
-const { setData, addNewList, updateListTitle, deleteList, newCard, closeNewCardForm } = mutations;
+const { setData, addNewList, updateListTitle, deleteList, newCard, closeNewCardForm, createNewCard } = mutations;
 
 describe('mutations.js', () => {
   // setData
@@ -90,5 +90,45 @@ describe('mutations.js', () => {
     };
     closeNewCardForm(state);
     expect(state.showForm).toBe(false);
+  });
+
+  // createNewCard
+  it('pushes new card object to target list', () => {
+    const state = {
+      lists: [
+        {
+          title: 'Foo',
+          position: 1,
+          items: [{ title: 'Bar', description: 'The first card in the first list', position: 1 }],
+        },
+        {
+          title: 'Baz',
+          position: 2,
+          items: [{ title: 'Far', description: 'The first card in the second list', position: 1 }],
+        },
+      ],
+      selectedList: 1,
+    };
+    const payload = {
+      title: 'Boo',
+      description: 'The second card in the first list',
+    };
+
+    createNewCard(state, payload);
+    expect(state.lists).toEqual([
+      {
+        title: 'Foo',
+        position: 1,
+        items: [
+          { title: 'Bar', description: 'The first card in the first list', position: 1 },
+          { title: 'Boo', description: 'The second card in the first list', position: 2 },
+        ],
+      },
+      {
+        title: 'Baz',
+        position: 2,
+        items: [{ title: 'Far', description: 'The first card in the second list', position: 1 }],
+      },
+    ]);
   });
 });

@@ -43,6 +43,18 @@ const closeNewCardForm = (state) => {
   state.showForm = false;
 };
 
+const createNewCard = (state, payload) => {
+  state.lists.forEach((list) => {
+    // find target list
+    if (list.position === state.selectedList) {
+      // set position of new card to last in list
+      payload.position = list.items.length + 1;
+      // push new card to target list
+      list.items.push(payload);
+    }
+  });
+};
+
 export default {
   setData,
   addNewList,
@@ -50,4 +62,5 @@ export default {
   deleteList,
   newCard,
   closeNewCardForm,
+  createNewCard,
 };

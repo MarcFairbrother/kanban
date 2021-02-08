@@ -1,6 +1,6 @@
 import actions from '@/store/actions';
 
-const { setData, addNewList, updateListTitle, deleteList, newCard, closeNewCardForm } = actions;
+const { setData, addNewList, updateListTitle, deleteList, newCard, closeNewCardForm, createNewCard } = actions;
 
 describe('actions.js', () => {
   const commit = jest.fn();
@@ -44,5 +44,15 @@ describe('actions.js', () => {
   it('commits closeNewCardForm', () => {
     closeNewCardForm({ commit });
     expect(commit).toHaveBeenCalledWith('closeNewCardForm');
+  });
+
+  // createNewCard
+  it('commits createNewCard', () => {
+    const payload = {
+      title: 'Foo',
+      description: 'Bar',
+    };
+    createNewCard({ commit }, payload);
+    expect(commit).toHaveBeenCalledWith('createNewCard', { title: 'Foo', description: 'Bar' });
   });
 });
