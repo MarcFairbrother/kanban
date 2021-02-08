@@ -18,10 +18,15 @@ const newCard = ({ commit }, payload) => {
   commit('newCard', payload);
 };
 
+const closeNewCardForm = ({ commit }) => {
+  commit('closeNewCardForm');
+};
+
 export default {
   setData,
   addNewList,
   updateListTitle,
   deleteList,
   newCard,
+  closeNewCardForm,
 };

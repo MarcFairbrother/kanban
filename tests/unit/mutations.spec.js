@@ -1,6 +1,6 @@
 import mutations from '@/store/mutations';
 
-const { setData, addNewList, updateListTitle, deleteList, newCard } = mutations;
+const { setData, addNewList, updateListTitle, deleteList, newCard, closeNewCardForm } = mutations;
 
 describe('mutations.js', () => {
   // setData
@@ -63,7 +63,7 @@ describe('mutations.js', () => {
   });
 
   // newCard
-  it('sets showModal to true', () => {
+  it('sets showForm to true', () => {
     const state = {
       showForm: false,
     };
@@ -81,5 +81,14 @@ describe('mutations.js', () => {
 
     newCard(state, payload);
     expect(state.selectedList).toBe(1);
+  });
+
+  // closeNewCardForm
+  it('sets showForm to false', () => {
+    const state = {
+      showForm: true,
+    };
+    closeNewCardForm(state);
+    expect(state.showForm).toBe(false);
   });
 });

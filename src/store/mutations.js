@@ -39,10 +39,15 @@ const newCard = (state, payload) => {
   state.selectedList = payload;
 };
 
+const closeNewCardForm = (state) => {
+  state.showForm = false;
+};
+
 export default {
   setData,
   addNewList,
   updateListTitle,
   deleteList,
   newCard,
+  closeNewCardForm,
 };
