@@ -53,6 +53,8 @@ const createNewCard = (state, payload) => {
       list.items.push(payload);
     }
   });
+  // in real world app db should be updated by action
+  updateLocalStorage('lists', state.lists);
 };
 
 export default {
