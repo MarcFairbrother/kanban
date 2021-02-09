@@ -26,6 +26,10 @@ const createNewCard = ({ commit }, payload) => {
   commit('createNewCard', payload);
 };
 
+const editCard = ({ commit }, payload) => {
+  commit('editCard', payload);
+};
+
 export default {
   setData,
   addNewList,
@@ -34,4 +38,5 @@ export default {
   newCard,
   closeNewCardForm,
   createNewCard,
+  editCard,
 };

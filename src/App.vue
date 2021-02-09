@@ -1,13 +1,15 @@
 <template>
   <main id="app">
     <AllLists />
-    <CreateCard v-if="showForm" class="createcard" />
+    <CreateCard v-if="showForm" class="js-createCard" />
+    <EditCard v-if="showEditModal" class="js-showEditModal" />
   </main>
 </template>
 
 <script>
 import AllLists from '@/components/AllLists.vue';
 import CreateCard from '@/components/CreateCard.vue';
+import EditCard from '@/components/EditCard.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -15,10 +17,14 @@ export default {
   components: {
     AllLists,
     CreateCard,
+    EditCard,
   },
   computed: {
     showForm() {
       return this.$store.state.showForm;
+    },
+    showEditModal() {
+      return this.$store.state.showEditModal;
     },
   },
   methods: {

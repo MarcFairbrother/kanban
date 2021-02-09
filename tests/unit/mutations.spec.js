@@ -1,6 +1,15 @@
 import mutations from '@/store/mutations';
 
-const { setData, addNewList, updateListTitle, deleteList, newCard, closeNewCardForm, createNewCard } = mutations;
+const {
+  setData,
+  addNewList,
+  updateListTitle,
+  deleteList,
+  newCard,
+  closeNewCardForm,
+  createNewCard,
+  editCard,
+} = mutations;
 
 describe('mutations.js', () => {
   // setData
@@ -130,5 +139,37 @@ describe('mutations.js', () => {
         items: [{ title: 'Far', description: 'The first card in the second list', position: 1 }],
       },
     ]);
+  });
+
+  // editCard
+  it('sets showEditModal to true', () => {
+    const state = {
+      showEditModal: false,
+      targetCardList: null,
+      targetCardPosition: null,
+    };
+    const payload = {
+      listPosition: 1,
+      cardPosition: 2,
+    };
+
+    editCard(state, payload);
+    expect(state.showEditModal).toBe(true);
+  });
+
+  it('sets target card positions', () => {
+    const state = {
+      showEditModal: false,
+      targetCardList: null,
+      targetCardPosition: null,
+    };
+    const payload = {
+      listPosition: 1,
+      cardPosition: 2,
+    };
+
+    editCard(state, payload);
+    expect(state.targetCardList).toBe(1);
+    expect(state.targetCardPosition).toBe(2);
   });
 });

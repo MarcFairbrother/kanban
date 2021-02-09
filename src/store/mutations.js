@@ -57,6 +57,12 @@ const createNewCard = (state, payload) => {
   updateLocalStorage('lists', state.lists);
 };
 
+const editCard = (state, { listPosition, cardPosition }) => {
+  state.showEditModal = true;
+  state.targetCardList = listPosition;
+  state.targetCardPosition = cardPosition;
+};
+
 export default {
   setData,
   addNewList,
@@ -65,4 +71,5 @@ export default {
   newCard,
   closeNewCardForm,
   createNewCard,
+  editCard,
 };

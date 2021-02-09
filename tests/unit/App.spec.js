@@ -8,6 +8,7 @@ describe('App.vue', () => {
   const store = new Vuex.Store({
     state: {
       showForm: true,
+      showEditModal: true,
     },
     actions: {
       setData: jest.fn(),
@@ -20,6 +21,7 @@ describe('App.vue', () => {
   });
 
   it('displays card creation form', () => {
-    expect(wrapper.find('.createcard').exists()).toBe(true);
+    expect(wrapper.find('.js-createCard').exists()).toBe(true);
+    expect(wrapper.find('.js-showEditModal').exists()).toBe(true);
   });
 });
