@@ -10,6 +10,7 @@ const {
   createNewCard,
   editCard,
   hideEditCardModal,
+  deleteCard,
 } = actions;
 
 describe('actions.js', () => {
@@ -80,5 +81,11 @@ describe('actions.js', () => {
   it('commits hideEditCardModal', () => {
     hideEditCardModal({ commit });
     expect(commit).toHaveBeenCalledWith('hideEditCardModal');
+  });
+
+  // deleteCard
+  it('commits deleteCard', () => {
+    deleteCard({ commit });
+    expect(commit).toHaveBeenCalledWith('deleteCard');
   });
 });

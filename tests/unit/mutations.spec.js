@@ -10,6 +10,7 @@ const {
   createNewCard,
   editCard,
   hideEditCardModal,
+  deleteCard,
 } = mutations;
 
 describe('mutations.js', () => {
@@ -182,5 +183,29 @@ describe('mutations.js', () => {
 
     hideEditCardModal(state);
     expect(state.showEditModal).toBe(false);
+  });
+
+  // deleteCard
+  it('deletes card from items array', () => {
+    const state = {
+      lists: [
+        {
+          position: 1,
+          items: [
+            { title: 'foo', position: 1 },
+            { title: 'bar', position: 2 },
+          ],
+        },
+        { position: 2, items: [{ title: 'baz', position: 1 }] },
+      ],
+      targetCardPosition: 1,
+      targetCardList: 1,
+    };
+
+    deleteCard(state);
+    expect(state.lists).toEqual([
+      { position: 1, items: [{ title: 'bar', position: 1 }] },
+      { position: 2, items: [{ title: 'baz', position: 1 }] },
+    ]);
   });
 });

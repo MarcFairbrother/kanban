@@ -67,6 +67,24 @@ const hideEditCardModal = (state) => {
   state.showEditModal = false;
 };
 
+const deleteCard = (state) => {
+  state.lists.forEach((list) => {
+    // find list containing card to delete
+    if (parseInt(list.position) === parseInt(state.targetCardList)) {
+      // find index of card to delete
+      const idx = list.items.map((item) => item.position).indexOf(state.targetCardPosition);
+      // delete card
+      list.items.splice(idx, 1);
+      // decrement position prop of cards with higher position
+      list.items.forEach((item) => {
+        item.position > idx ? item.position-- : null;
+      });
+    }
+  });
+  // in real world app db should be updated by action
+  updateLocalStorage('lists', state.lists);
+};
+
 export default {
   setData,
   addNewList,
@@ -77,4 +95,5 @@ export default {
   createNewCard,
   editCard,
   hideEditCardModal,
+  deleteCard,
 };

@@ -14,11 +14,13 @@ describe('EditCard.vue', () => {
     },
   });
   const handleHideEditCardModal = jest.fn();
+  const handleDeleteCard = jest.fn();
   const wrapper = shallowMount(EditCard, {
     store,
     localVue,
     methods: {
       handleHideEditCardModal,
+      handleDeleteCard,
     },
   });
 
@@ -30,5 +32,10 @@ describe('EditCard.vue', () => {
   it('calls hideEditCardModal on click', () => {
     wrapper.find('button.js-hideEditCardModal').trigger('click');
     expect(handleHideEditCardModal).toHaveBeenCalled();
+  });
+
+  it('calls handleDeleteCard on click', () => {
+    wrapper.find('button.js-deleteCard').trigger('click');
+    expect(handleDeleteCard).toHaveBeenCalled();
   });
 });

@@ -3,6 +3,7 @@
     <h2 v-html="card.title"></h2>
     <p v-html="card.description"></p>
     <button class="js-hideEditCardModal" @click="handleHideEditCardModal">Done</button>
+    <button class="js-deleteCard" @click="handleDeleteCard">Delete</button>
   </article>
 </template>
 
@@ -15,8 +16,12 @@ export default {
     ...mapGetters({ card: 'getTargetCardData' }),
   },
   methods: {
-    ...mapActions({ hideEditCardModal: 'hideEditCardModal' }),
+    ...mapActions({ hideEditCardModal: 'hideEditCardModal', deleteCard: 'deleteCard' }),
     handleHideEditCardModal() {
+      this.hideEditCardModal();
+    },
+    handleDeleteCard() {
+      this.deleteCard();
       this.hideEditCardModal();
     },
   },
