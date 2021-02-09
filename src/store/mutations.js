@@ -85,6 +85,20 @@ const deleteCard = (state) => {
   updateLocalStorage('lists', state.lists);
 };
 
+const editCardData = (state, { propName, updatedValue }) => {
+  state.lists.forEach((list) => {
+    // find list containing card to update
+    if (parseInt(list.position) === parseInt(state.targetCardList)) {
+      // find index of card to update
+      const idx = list.items.map((item) => item.position).indexOf(state.targetCardPosition);
+      // update given prop
+      list.items[idx][propName] = updatedValue;
+    }
+  });
+  // in real world app db should be updated by action
+  updateLocalStorage('lists', state.lists);
+};
+
 export default {
   setData,
   addNewList,
@@ -96,4 +110,5 @@ export default {
   editCard,
   hideEditCardModal,
   deleteCard,
+  editCardData,
 };

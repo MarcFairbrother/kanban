@@ -11,6 +11,7 @@ const {
   editCard,
   hideEditCardModal,
   deleteCard,
+  editCardData,
 } = actions;
 
 describe('actions.js', () => {
@@ -87,5 +88,15 @@ describe('actions.js', () => {
   it('commits deleteCard', () => {
     deleteCard({ commit });
     expect(commit).toHaveBeenCalledWith('deleteCard');
+  });
+
+  // editCardData
+  it('commits editCardData', () => {
+    const payload = {
+      propName: 'description',
+      updatedValue: 'foo',
+    };
+    editCardData({ commit }, payload);
+    expect(commit).toHaveBeenCalledWith('editCardData', { propName: 'description', updatedValue: 'foo' });
   });
 });

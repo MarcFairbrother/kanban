@@ -11,6 +11,7 @@ const {
   editCard,
   hideEditCardModal,
   deleteCard,
+  editCardData,
 } = mutations;
 
 describe('mutations.js', () => {
@@ -207,5 +208,35 @@ describe('mutations.js', () => {
       { position: 1, items: [{ title: 'bar', position: 1 }] },
       { position: 2, items: [{ title: 'baz', position: 1 }] },
     ]);
+  });
+
+  // editCardData
+  it('updates title of object on items array', () => {
+    const state = {
+      lists: [{ position: 1, items: [{ title: 'foo', position: 1 }] }],
+      targetCardPosition: 1,
+      targetCardList: 1,
+    };
+    const payload = {
+      propName: 'title',
+      updatedValue: 'bar',
+      position: 1,
+    };
+    editCardData(state, payload);
+    expect(state.lists).toEqual([{ position: 1, items: [{ title: 'bar', position: 1 }] }]);
+  });
+
+  it('updates description of object on items array', () => {
+    const state = {
+      lists: [{ position: 1, items: [{ description: 'foo', position: 1 }] }],
+      targetCardPosition: 1,
+      targetCardList: 1,
+    };
+    const payload = {
+      propName: 'description',
+      updatedValue: 'bar',
+    };
+    editCardData(state, payload);
+    expect(state.lists).toEqual([{ position: 1, items: [{ description: 'bar', position: 1 }] }]);
   });
 });
