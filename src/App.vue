@@ -39,6 +39,7 @@ export default {
           items: [
             {
               title: 'An example card',
+              description: 'You can edit or delete this card by clicking on the edit button.',
               position: '1',
             },
           ],
