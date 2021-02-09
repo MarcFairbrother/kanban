@@ -1,7 +1,7 @@
 <template>
   <ul class="list">
     <li v-for="(item, idx) in listData.items" :key="idx">
-      <SingleCard :card-data="item" />
+      <SingleCard :card-data="item" :list-data="listData.position" />
     </li>
     <li>
       <button class="js-newCard" @click="handleNewCard(listData.position)">New Card</button>
