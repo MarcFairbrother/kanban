@@ -30,6 +30,10 @@ const editCard = ({ commit }, payload) => {
   commit('editCard', payload);
 };
 
+const hideEditCardModal = ({ commit }) => {
+  commit('hideEditCardModal');
+};
+
 export default {
   setData,
   addNewList,
@@ -39,4 +43,5 @@ export default {
   closeNewCardForm,
   createNewCard,
   editCard,
+  hideEditCardModal,
 };

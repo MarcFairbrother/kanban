@@ -9,6 +9,7 @@ const {
   closeNewCardForm,
   createNewCard,
   editCard,
+  hideEditCardModal,
 } = mutations;
 
 describe('mutations.js', () => {
@@ -171,5 +172,15 @@ describe('mutations.js', () => {
     editCard(state, payload);
     expect(state.targetCardList).toBe(1);
     expect(state.targetCardPosition).toBe(2);
+  });
+
+  // hideEditCardModal
+  it('sets showEditModal to false', () => {
+    const state = {
+      showEditModal: true,
+    };
+
+    hideEditCardModal(state);
+    expect(state.showEditModal).toBe(false);
   });
 });

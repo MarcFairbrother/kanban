@@ -63,6 +63,10 @@ const editCard = (state, { listPosition, cardPosition }) => {
   state.targetCardPosition = cardPosition;
 };
 
+const hideEditCardModal = (state) => {
+  state.showEditModal = false;
+};
+
 export default {
   setData,
   addNewList,
@@ -72,4 +76,5 @@ export default {
   closeNewCardForm,
   createNewCard,
   editCard,
+  hideEditCardModal,
 };

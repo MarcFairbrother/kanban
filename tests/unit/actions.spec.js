@@ -9,6 +9,7 @@ const {
   closeNewCardForm,
   createNewCard,
   editCard,
+  hideEditCardModal,
 } = actions;
 
 describe('actions.js', () => {
@@ -73,5 +74,11 @@ describe('actions.js', () => {
     };
     editCard({ commit }, payload);
     expect(commit).toHaveBeenCalledWith('editCard', { listPosition: 1, cardPosition: 2 });
+  });
+
+  // hideEditCardModal
+  it('commits hideEditCardModal', () => {
+    hideEditCardModal({ commit });
+    expect(commit).toHaveBeenCalledWith('hideEditCardModal');
   });
 });
