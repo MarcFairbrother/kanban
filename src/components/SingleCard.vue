@@ -1,9 +1,9 @@
 <template>
-  <article :data-position="cardData.position" :data-list="listData">
-    <h3>{{ cardData.title }}</h3>
-    <p>{{ cardData.description }}</p>
+  <article class="card" :data-position="cardData.position" :data-list="listData">
+    <h3 class="card__title">{{ cardData.title }}</h3>
+    <p class="card__description">{{ cardData.description }}</p>
     <button
-      class="js-handleEditCard"
+      class="js-handleEditCard card__edit"
       @click="handleEditCard({ listPosition: parseInt(listData), cardPosition: parseInt(cardData.position) })"
     >
       Edit
@@ -25,3 +25,37 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.card {
+  &:hover {
+    cursor: move;
+  }
+  &__title {
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+  }
+  &__description {
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+  }
+  &__edit {
+    align-items: center;
+    background-color: transparent;
+    background-image: var(--edit-icn);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 2rem;
+    border: solid 1px transparent;
+    color: var(--acnt-clr);
+    cursor: pointer;
+    display: flex;
+    line-height: 2.2rem;
+    padding: 0 0 0 3rem;
+    &:focus {
+      outline: solid 1px var(--acnt-clr);
+      outline-offset: 4px;
+    }
+  }
+}
+</style>

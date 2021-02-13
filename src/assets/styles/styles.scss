@@ -1,1 +1,78 @@
-@import '_breakpoints.scss';
+@import '_breakpoints.scss', '_figures.scss';
+
+/* roboto-regular - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/roboto-v20-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''), url('./assets/fonts/roboto-v20-latin-regular.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('./assets/fonts/roboto-v20-latin-regular.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('./assets/fonts/roboto-v20-latin-regular.woff') format('woff'),
+    /* Modern Browsers */ url('./assets/fonts/roboto-v20-latin-regular.ttf') format('truetype'),
+    /* Safari, Android, iOS */ url('./assets/fonts/roboto-v20-latin-regular.svg#Roboto') format('svg'); /* Legacy iOS */
+}
+
+/* roboto-700 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./assets/fonts/roboto-v20-latin-700.eot'); /* IE9 Compat Modes */
+  src: local(''), url('./assets/fonts/roboto-v20-latin-700.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('./assets/fonts/roboto-v20-latin-700.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('./assets/fonts/roboto-v20-latin-700.woff') format('woff'),
+    /* Modern Browsers */ url('./assets/fonts/roboto-v20-latin-700.ttf') format('truetype'),
+    /* Safari, Android, iOS */ url('./assets/fonts/roboto-v20-latin-700.svg#Roboto') format('svg'); /* Legacy iOS */
+}
+
+:root {
+  --main-clr: #202026;
+  --scnd-clr: #a1b0b2;
+  --acnt-clr: #19daf4;
+  --err-clr: #a80046;
+  font-size: 62.5%;
+  scrollbar-color: #565f64 #444748;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--main-clr);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+p,
+li,
+label {
+  line-height: 1.4;
+  margin: 0;
+}
+
+button,
+input {
+  font-family: inherit;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  margin: 0;
+  overflow: visible;
+}
+
+button,
+[type='button'],
+[type='submit'] {
+  text-transform: none;
+  -webkit-appearance: button;
+}

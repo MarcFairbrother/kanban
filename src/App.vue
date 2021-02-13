@@ -1,12 +1,22 @@
 <template>
-  <main id="app">
-    <AllLists />
-    <CreateCard v-if="showForm" class="js-createCard" />
-    <EditCard v-if="showEditModal" class="js-showEditModal" />
-  </main>
+  <div id="app" class="container">
+    <header class="header">
+      <SvgLogo />
+    </header>
+    <main>
+      <AllLists />
+    </main>
+    <transition name="fade">
+      <CreateCard v-if="showForm" class="js-createCard" />
+    </transition>
+    <transition name="fade">
+      <EditCard v-if="showEditModal" class="js-showEditModal" />
+    </transition>
+  </div>
 </template>
 
 <script>
+import SvgLogo from '@/components/SvgLogo.vue';
 import AllLists from '@/components/AllLists.vue';
 import CreateCard from '@/components/CreateCard.vue';
 import EditCard from '@/components/EditCard.vue';
@@ -18,6 +28,7 @@ export default {
     AllLists,
     CreateCard,
     EditCard,
+    SvgLogo,
   },
   computed: {
     showForm() {
@@ -58,4 +69,34 @@ export default {
 
 <style lang="scss">
 @import './assets/styles/styles.scss';
+.container {
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: scroll;
+  padding: 2rem;
+  scrollbar-color: #565f64 #444748;
+  @include breakpoint($tablet-width) {
+    padding: 4rem;
+  }
+}
+.header {
+  margin-bottom: 2rem;
+  width: 100%;
+  @include breakpoint($tablet-width) {
+    margin-bottom: 4rem;
+  }
+  & > svg {
+    height: auto;
+    max-width: 280px;
+    width: 100%;
+  }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
