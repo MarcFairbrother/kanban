@@ -12,7 +12,7 @@ export default new Vuex.Store({
     selectedList: null,
     showForm: false,
     showEditModal: false,
-    targetCardPosition: null,
+    targetCardId: null,
     targetCardList: null,
   },
   actions,

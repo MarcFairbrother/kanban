@@ -1,10 +1,10 @@
 <template>
-  <article class="card" :data-position="cardData.position" :data-list="listData">
+  <article class="card" :data-id="cardData.id" :data-list="listData">
     <h3 class="card__title">{{ cardData.title }}</h3>
     <p class="card__description">{{ cardData.description }}</p>
     <button
       class="js-handleEditCard card__edit"
-      @click="handleEditCard({ listPosition: parseInt(listData), cardPosition: parseInt(cardData.position) })"
+      @click="handleEditCard({ listId: parseInt(listData), cardId: parseInt(cardData.id) })"
     >
       Edit
     </button>
@@ -46,7 +46,7 @@ export default {
     align-items: center;
     background-color: transparent;
     background-image: var(--edit-icn);
-    background-position: left top;
+    background-id: left top;
     background-repeat: no-repeat;
     background-size: 2rem;
     border: solid 1px transparent;

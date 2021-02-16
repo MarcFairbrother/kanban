@@ -8,7 +8,7 @@ describe('SingleCard.vue', () => {
         cardData: {
           title: 'Foo',
           description: 'Bar',
-          position: 1,
+          id: 1,
         },
         listData: 2,
       },
@@ -16,7 +16,7 @@ describe('SingleCard.vue', () => {
 
     expect(wrapper.find('h3').text()).toBe('Foo');
     expect(wrapper.find('p').text()).toBe('Bar');
-    expect(wrapper.find('article[data-position="1"]').exists()).toBe(true);
+    expect(wrapper.find('article[data-id="1"]').exists()).toBe(true);
     expect(wrapper.find('article[data-list="2"]').exists()).toBe(true);
   });
 
@@ -27,7 +27,7 @@ describe('SingleCard.vue', () => {
         cardData: {
           title: 'Foo',
           description: 'Bar',
-          position: 1,
+          id: 1,
         },
         listData: 2,
       },

@@ -33,9 +33,9 @@ describe('actions.js', () => {
 
   // updateListTitle
   it('commits updateListTitle', () => {
-    const payload = { newTitle: 'foo', position: 1 };
+    const payload = { newTitle: 'foo', id: 1 };
     updateListTitle({ commit }, payload);
-    expect(commit).toHaveBeenCalledWith('updateListTitle', { newTitle: 'foo', position: 1 });
+    expect(commit).toHaveBeenCalledWith('updateListTitle', { newTitle: 'foo', id: 1 });
   });
 
   // deleteList
@@ -71,11 +71,11 @@ describe('actions.js', () => {
   // editCard
   it('commits editCard', () => {
     const payload = {
-      listPosition: 1,
-      cardPosition: 2,
+      listId: 1,
+      cardId: 2,
     };
     editCard({ commit }, payload);
-    expect(commit).toHaveBeenCalledWith('editCard', { listPosition: 1, cardPosition: 2 });
+    expect(commit).toHaveBeenCalledWith('editCard', { listId: 1, cardId: 2 });
   });
 
   // hideEditCardModal

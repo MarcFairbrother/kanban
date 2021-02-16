@@ -34,43 +34,43 @@ describe('mutations.js', () => {
     const payload = { foo: 'baz' };
     expect(state.lists).toEqual([{ foo: 'bar' }]);
     addNewList(state, payload);
-    expect(state.lists).toEqual([{ foo: 'bar' }, { foo: 'baz', position: 2 }]);
+    expect(state.lists).toEqual([{ foo: 'bar' }, { foo: 'baz', id: 2 }]);
   });
 
-  it('sets the position of new list to the length of the array', () => {
+  it('sets the id of new list to the length of the array', () => {
     const state = {
-      lists: [{ foo: 'bar', position: 1 }],
+      lists: [{ foo: 'bar', id: 1 }],
     };
     const payload = [{ foo: 'baz' }];
     addNewList(state, payload);
-    expect(state.lists[state.lists.length - 1].position).toEqual(state.lists.length);
+    expect(state.lists[state.lists.length - 1].id).toEqual(state.lists.length);
   });
 
   // updateListTitle
   it('updates the list title', () => {
     const state = {
-      lists: [{ title: 'foo', position: 1 }],
+      lists: [{ title: 'foo', id: 1 }],
     };
-    const payload = { newTitle: 'bar', position: 1 };
+    const payload = { newTitle: 'bar', id: 1 };
     updateListTitle(state, payload);
     expect(state.lists[0].title).toEqual('bar');
   });
 
   // deleteList
-  it('deletes the list with corresponding position and updates the position of other lists', () => {
+  it('deletes the list with corresponding id and updates the id of other lists', () => {
     const state = {
       lists: [
-        { title: 'foo', position: 1 },
-        { title: 'bar', position: 2 },
-        { title: 'baz', position: 3 },
+        { title: 'foo', id: 1 },
+        { title: 'bar', id: 2 },
+        { title: 'baz', id: 3 },
       ],
     };
     const payload = 2;
 
     deleteList(state, payload);
     expect(state.lists).toEqual([
-      { title: 'foo', position: 1 },
-      { title: 'baz', position: 2 },
+      { title: 'foo', id: 1 },
+      { title: 'baz', id: 2 },
     ]);
   });
 
@@ -110,13 +110,13 @@ describe('mutations.js', () => {
       lists: [
         {
           title: 'Foo',
-          position: 1,
-          items: [{ title: 'Bar', description: 'The first card in the first list', position: 1 }],
+          id: 1,
+          items: [{ title: 'Bar', description: 'The first card in the first list', id: 1 }],
         },
         {
           title: 'Baz',
-          position: 2,
-          items: [{ title: 'Far', description: 'The first card in the second list', position: 1 }],
+          id: 2,
+          items: [{ title: 'Far', description: 'The first card in the second list', id: 1 }],
         },
       ],
       selectedList: 1,
@@ -130,16 +130,16 @@ describe('mutations.js', () => {
     expect(state.lists).toEqual([
       {
         title: 'Foo',
-        position: 1,
+        id: 1,
         items: [
-          { title: 'Bar', description: 'The first card in the first list', position: 1 },
-          { title: 'Boo', description: 'The second card in the first list', position: 2 },
+          { title: 'Bar', description: 'The first card in the first list', id: 1 },
+          { title: 'Boo', description: 'The second card in the first list', id: 2 },
         ],
       },
       {
         title: 'Baz',
-        position: 2,
-        items: [{ title: 'Far', description: 'The first card in the second list', position: 1 }],
+        id: 2,
+        items: [{ title: 'Far', description: 'The first card in the second list', id: 1 }],
       },
     ]);
   });
@@ -149,31 +149,31 @@ describe('mutations.js', () => {
     const state = {
       showEditModal: false,
       targetCardList: null,
-      targetCardPosition: null,
+      targetCardId: null,
     };
     const payload = {
-      listPosition: 1,
-      cardPosition: 2,
+      listId: 1,
+      cardId: 2,
     };
 
     editCard(state, payload);
     expect(state.showEditModal).toBe(true);
   });
 
-  it('sets target card positions', () => {
+  it('sets target card ids', () => {
     const state = {
       showEditModal: false,
       targetCardList: null,
-      targetCardPosition: null,
+      targetCardId: null,
     };
     const payload = {
-      listPosition: 1,
-      cardPosition: 2,
+      listId: 1,
+      cardId: 2,
     };
 
     editCard(state, payload);
     expect(state.targetCardList).toBe(1);
-    expect(state.targetCardPosition).toBe(2);
+    expect(state.targetCardId).toBe(2);
   });
 
   // hideEditCardModal
@@ -191,45 +191,45 @@ describe('mutations.js', () => {
     const state = {
       lists: [
         {
-          position: 1,
+          id: 1,
           items: [
-            { title: 'foo', position: 1 },
-            { title: 'bar', position: 2 },
+            { title: 'foo', id: 1 },
+            { title: 'bar', id: 2 },
           ],
         },
-        { position: 2, items: [{ title: 'baz', position: 1 }] },
+        { id: 2, items: [{ title: 'baz', id: 1 }] },
       ],
-      targetCardPosition: 1,
+      targetCardId: 1,
       targetCardList: 1,
     };
 
     deleteCard(state);
     expect(state.lists).toEqual([
-      { position: 1, items: [{ title: 'bar', position: 1 }] },
-      { position: 2, items: [{ title: 'baz', position: 1 }] },
+      { id: 1, items: [{ title: 'bar', id: 1 }] },
+      { id: 2, items: [{ title: 'baz', id: 1 }] },
     ]);
   });
 
   // editCardData
   it('updates title of object on items array', () => {
     const state = {
-      lists: [{ position: 1, items: [{ title: 'foo', position: 1 }] }],
-      targetCardPosition: 1,
+      lists: [{ id: 1, items: [{ title: 'foo', id: 1 }] }],
+      targetCardId: 1,
       targetCardList: 1,
     };
     const payload = {
       propName: 'title',
       updatedValue: 'bar',
-      position: 1,
+      id: 1,
     };
     editCardData(state, payload);
-    expect(state.lists).toEqual([{ position: 1, items: [{ title: 'bar', position: 1 }] }]);
+    expect(state.lists).toEqual([{ id: 1, items: [{ title: 'bar', id: 1 }] }]);
   });
 
   it('updates description of object on items array', () => {
     const state = {
-      lists: [{ position: 1, items: [{ description: 'foo', position: 1 }] }],
-      targetCardPosition: 1,
+      lists: [{ id: 1, items: [{ description: 'foo', id: 1 }] }],
+      targetCardId: 1,
       targetCardList: 1,
     };
     const payload = {
@@ -237,6 +237,6 @@ describe('mutations.js', () => {
       updatedValue: 'bar',
     };
     editCardData(state, payload);
-    expect(state.lists).toEqual([{ position: 1, items: [{ description: 'bar', position: 1 }] }]);
+    expect(state.lists).toEqual([{ id: 1, items: [{ description: 'bar', id: 1 }] }]);
   });
 });

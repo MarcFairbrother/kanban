@@ -1,13 +1,13 @@
 <template>
   <ul class="list">
     <li class="list__item" v-for="(item, idx) in listData.items" :key="idx">
-      <SingleCard :card-data="item" :list-data="listData.position" />
+      <SingleCard :card-data="item" :list-data="listData.id" />
     </li>
     <li class="list__item list__item--add">
-      <button class="js-newCard" @click="handleNewCard(listData.position)">New Card</button>
+      <button class="js-newCard" @click="handleNewCard(listData.id)">New Card</button>
     </li>
     <li class="list__item list__item--delete" v-if="listData.items.length === 0">
-      <button class="js-deleteList" @click="handleDeleteList(listData.position)">Delete List</button>
+      <button class="js-deleteList" @click="handleDeleteList(listData.id)">Delete List</button>
     </li>
   </ul>
 </template>
@@ -24,11 +24,11 @@ export default {
   },
   methods: {
     ...mapActions({ deleteList: 'deleteList', newCard: 'newCard' }),
-    handleDeleteList(position) {
-      this.deleteList(position);
+    handleDeleteList(id) {
+      this.deleteList(id);
     },
-    handleNewCard(position) {
-      this.newCard(position);
+    handleNewCard(id) {
+      this.newCard(id);
     },
   },
 };

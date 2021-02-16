@@ -5,7 +5,7 @@ const setData = (state, payload) => {
 };
 
 const addNewList = (state, payload) => {
-  payload.position = state.lists.length + 1;
+  payload.id = state.lists.length + 1;
   state.lists.push(payload);
   // in real world app db should be updated by action
   updateLocalStorage('lists', state.lists);
@@ -13,7 +13,7 @@ const addNewList = (state, payload) => {
 
 const updateListTitle = (state, payload) => {
   state.lists.forEach((list) => {
-    if (list.position === payload.position) {
+    if (list.id === payload.id) {
       list.title = payload.newTitle;
     }
   });
@@ -22,13 +22,13 @@ const updateListTitle = (state, payload) => {
 };
 
 const deleteList = (state, payload) => {
-  // get index of list with target position
-  const indexToDelete = state.lists.map((list) => list.position).indexOf(payload);
+  // get index of list with target id
+  const indexToDelete = state.lists.map((list) => list.id).indexOf(payload);
   // delete the list
   state.lists.splice(indexToDelete, 1);
-  // decrement position of lists with a higher position
+  // decrement id of lists with a higher id
   state.lists.forEach((list) => {
-    list.position > indexToDelete ? list.position-- : null;
+    list.id > indexToDelete ? list.id-- : null;
   });
   // in real world app db should be updated by action
   updateLocalStorage('lists', state.lists);
@@ -46,9 +46,9 @@ const closeNewCardForm = (state) => {
 const createNewCard = (state, payload) => {
   state.lists.forEach((list) => {
     // find target list
-    if (list.position === state.selectedList) {
-      // set position of new card to last in list
-      payload.position = list.items.length + 1;
+    if (list.id === state.selectedList) {
+      // set id of new card to last in list
+      payload.id = list.items.length + 1;
       // push new card to target list
       list.items.push(payload);
     }
@@ -57,10 +57,10 @@ const createNewCard = (state, payload) => {
   updateLocalStorage('lists', state.lists);
 };
 
-const editCard = (state, { listPosition, cardPosition }) => {
+const editCard = (state, { listId, cardId }) => {
   state.showEditModal = true;
-  state.targetCardList = listPosition;
-  state.targetCardPosition = cardPosition;
+  state.targetCardList = listId;
+  state.targetCardId = cardId;
 };
 
 const hideEditCardModal = (state) => {
@@ -70,14 +70,14 @@ const hideEditCardModal = (state) => {
 const deleteCard = (state) => {
   state.lists.forEach((list) => {
     // find list containing card to delete
-    if (parseInt(list.position) === parseInt(state.targetCardList)) {
+    if (parseInt(list.id) === parseInt(state.targetCardList)) {
       // find index of card to delete
-      const idx = list.items.map((item) => item.position).indexOf(state.targetCardPosition);
+      const idx = list.items.map((item) => item.id).indexOf(state.targetCardId);
       // delete card
       list.items.splice(idx, 1);
-      // decrement position prop of cards with higher position
+      // decrement id prop of cards with higher id
       list.items.forEach((item) => {
-        item.position > idx ? item.position-- : null;
+        item.id > idx ? item.id-- : null;
       });
     }
   });
@@ -88,9 +88,9 @@ const deleteCard = (state) => {
 const editCardData = (state, { propName, updatedValue }) => {
   state.lists.forEach((list) => {
     // find list containing card to update
-    if (parseInt(list.position) === parseInt(state.targetCardList)) {
+    if (parseInt(list.id) === parseInt(state.targetCardList)) {
       // find index of card to update
-      const idx = list.items.map((item) => item.position).indexOf(state.targetCardPosition);
+      const idx = list.items.map((item) => item.id).indexOf(state.targetCardId);
       // update given prop
       list.items[idx][propName] = updatedValue;
     }

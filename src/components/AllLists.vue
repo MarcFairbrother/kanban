@@ -1,7 +1,7 @@
 <template>
   <ul class="lists">
-    <li v-for="(list, idx) in lists" :key="idx" class="lists__item lists__item--list" :data-position="list.position">
-      <h2 contenteditable="true" @blur="handleTitleEdit($event, list.position)" v-html="list.title"></h2>
+    <li v-for="(list, idx) in lists" :key="idx" class="lists__item lists__item--list" :data-id="list.id">
+      <h2 contenteditable="true" @blur="handleTitleEdit($event, list.id)" v-html="list.title"></h2>
       <SingleList :list-data="list" />
     </li>
     <li class="lists__item lists__item--add">
@@ -24,8 +24,8 @@ export default {
   },
   methods: {
     ...mapActions({ addNewList: 'addNewList', updateListTitle: 'updateListTitle' }),
-    handleTitleEdit(e, position) {
-      this.updateListTitle({ newTitle: e.target.innerText, position });
+    handleTitleEdit(e, id) {
+      this.updateListTitle({ newTitle: e.target.innerText, id });
     },
   },
 };

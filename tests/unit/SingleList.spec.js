@@ -31,7 +31,7 @@ describe('SingeList.vue', () => {
     const wrapper = shallowMount(SingleList, {
       propsData: {
         listData: {
-          position: 1,
+          id: 1,
           items: [],
         },
       },
@@ -49,7 +49,7 @@ describe('SingeList.vue', () => {
     const wrapper = shallowMount(SingleList, {
       propsData: {
         listData: {
-          position: 1,
+          id: 1,
           items: [],
         },
       },
