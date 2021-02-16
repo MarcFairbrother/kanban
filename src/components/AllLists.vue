@@ -1,6 +1,13 @@
 <template>
-  <ul class="lists">
-    <li v-for="(list, idx) in lists" :key="idx" class="lists__item lists__item--list" :data-id="list.id">
+  <ul class="lists" @dragover.prevent="dragOverElement" @drop.prevent="dropOnElement">
+    <li
+      v-for="(list, idx) in lists"
+      :key="`${idx}${list.id}`"
+      class="lists__item lists__item--list"
+      :data-id="list.id"
+      @drag.prevent="dragElement"
+      draggable="true"
+    >
       <h2 contenteditable="true" @blur="handleTitleEdit($event, list.id)" v-html="list.title"></h2>
       <SingleList :list-data="list" />
     </li>
@@ -16,6 +23,11 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'AllLists',
+  data() {
+    return {
+      dragging: null,
+    };
+  },
   components: {
     SingleList,
   },
@@ -23,10 +35,60 @@ export default {
     ...mapGetters({ lists: 'getLists' }),
   },
   methods: {
-    ...mapActions({ addNewList: 'addNewList', updateListTitle: 'updateListTitle' }),
+    ...mapActions({
+      addNewList: 'addNewList',
+      updateListTitle: 'updateListTitle',
+      reorderLists: 'reorderLists',
+      setData: 'setData',
+    }),
     handleTitleEdit(e, id) {
       this.updateListTitle({ newTitle: e.target.innerText, id });
     },
+    dragElement(e) {
+      this.dragging = e.target;
+      e.target.classList.add('js-dragging');
+    },
+    dragOverElement(e) {
+      if (this.dragging.classList.contains('lists__item--list')) {
+        // handle list drag
+        const container = document.querySelector('.lists');
+        const elementRightOfCursor = this.getListRightOfCursor(container, e.clientX);
+        if (elementRightOfCursor) {
+          container.insertBefore(this.dragging, elementRightOfCursor);
+        } else {
+          const containerLastElementChild = container.lastElementChild;
+          container.insertBefore(this.dragging, containerLastElementChild);
+        }
+      }
+    },
+    dropOnElement() {
+      const listIds = [...document.querySelectorAll('.lists__item--list')].map((list) => parseInt(list.dataset.id));
+      const reorderedLists = [];
+      listIds.forEach((listId) => {
+        const matchingList = this.$store.state.lists.find((list) => list.id === listId);
+        reorderedLists.push(matchingList);
+      });
+      this.reorderLists(reorderedLists);
+    },
+    getListRightOfCursor(container, x) {
+      const draggableElements = [...container.querySelectorAll('.lists__item--list:not(.js-dragging)')];
+      // return the draggable element below the current cursor position
+      return draggableElements.reduce(
+        (closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = x - box.left - box.width / 2;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return closest;
+          }
+        },
+        { offset: Number.NEGATIVE_INFINITY }
+      ).element;
+    },
+  },
+  updated() {
+    console.log('updated AllLists component');
   },
 };
 </script>

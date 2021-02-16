@@ -12,6 +12,7 @@ const {
   hideEditCardModal,
   deleteCard,
   editCardData,
+  reorderLists,
 } = actions;
 
 describe('actions.js', () => {
@@ -98,5 +99,18 @@ describe('actions.js', () => {
     };
     editCardData({ commit }, payload);
     expect(commit).toHaveBeenCalledWith('editCardData', { propName: 'description', updatedValue: 'foo' });
+  });
+
+  // reorderLists
+  it('commits reorderLists', () => {
+    const payload = [
+      { title: 'foo', id: 1 },
+      { title: 'bar', id: 2 },
+    ];
+    reorderLists({ commit }, payload);
+    expect(commit).toHaveBeenLastCalledWith('reorderLists', [
+      { title: 'foo', id: 1 },
+      { title: 'bar', id: 2 },
+    ]);
   });
 });

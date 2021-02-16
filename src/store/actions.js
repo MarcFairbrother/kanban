@@ -42,6 +42,10 @@ const editCardData = ({ commit }, payload) => {
   commit('editCardData', payload);
 };
 
+const reorderLists = ({ commit }, payload) => {
+  commit('reorderLists', payload);
+};
+
 export default {
   setData,
   addNewList,
@@ -54,4 +58,5 @@ export default {
   hideEditCardModal,
   deleteCard,
   editCardData,
+  reorderLists,
 };

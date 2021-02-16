@@ -12,6 +12,7 @@ const {
   hideEditCardModal,
   deleteCard,
   editCardData,
+  reorderLists,
 } = mutations;
 
 describe('mutations.js', () => {
@@ -29,12 +30,15 @@ describe('mutations.js', () => {
   // addNewList
   it('pushes new list object to lists array', () => {
     const state = {
-      lists: [{ foo: 'bar' }],
+      lists: [{ foo: 'bar', id: 1 }],
     };
     const payload = { foo: 'baz' };
-    expect(state.lists).toEqual([{ foo: 'bar' }]);
+    expect(state.lists).toEqual([{ foo: 'bar', id: 1 }]);
     addNewList(state, payload);
-    expect(state.lists).toEqual([{ foo: 'bar' }, { foo: 'baz', id: 2 }]);
+    expect(state.lists).toEqual([
+      { foo: 'bar', id: 1 },
+      { foo: 'baz', id: 2 },
+    ]);
   });
 
   it('sets the id of new list to the length of the array', () => {
@@ -57,7 +61,7 @@ describe('mutations.js', () => {
   });
 
   // deleteList
-  it('deletes the list with corresponding id and updates the id of other lists', () => {
+  it('deletes the list with corresponding id', () => {
     const state = {
       lists: [
         { title: 'foo', id: 1 },
@@ -70,7 +74,7 @@ describe('mutations.js', () => {
     deleteList(state, payload);
     expect(state.lists).toEqual([
       { title: 'foo', id: 1 },
-      { title: 'baz', id: 2 },
+      { title: 'baz', id: 3 },
     ]);
   });
 
@@ -238,5 +242,27 @@ describe('mutations.js', () => {
     };
     editCardData(state, payload);
     expect(state.lists).toEqual([{ id: 1, items: [{ description: 'bar', id: 1 }] }]);
+  });
+
+  // reorderLists
+  it('reorders the lists array', () => {
+    const state = {
+      lists: [
+        { title: 'foo', id: 1 },
+        { title: 'bar', id: 2 },
+        { title: 'baz', id: 3 },
+      ],
+    };
+    const payload = [
+      { title: 'baz', id: 3 },
+      { title: 'foo', id: 1 },
+      { title: 'bar', id: 2 },
+    ];
+    reorderLists(state, payload);
+    expect(state.lists).toEqual([
+      { title: 'baz', id: 3 },
+      { title: 'foo', id: 1 },
+      { title: 'bar', id: 2 },
+    ]);
   });
 });

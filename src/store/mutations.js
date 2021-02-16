@@ -5,7 +5,10 @@ const setData = (state, payload) => {
 };
 
 const addNewList = (state, payload) => {
-  payload.id = state.lists.length + 1;
+  // get existing list ids
+  const existingListIds = state.lists.map((list) => list.id);
+  // increment highest existing id value and set as id for new list
+  payload.id = Math.max(...existingListIds) + 1;
   state.lists.push(payload);
   // in real world app db should be updated by action
   updateLocalStorage('lists', state.lists);
@@ -26,10 +29,6 @@ const deleteList = (state, payload) => {
   const indexToDelete = state.lists.map((list) => list.id).indexOf(payload);
   // delete the list
   state.lists.splice(indexToDelete, 1);
-  // decrement id of lists with a higher id
-  state.lists.forEach((list) => {
-    list.id > indexToDelete ? list.id-- : null;
-  });
   // in real world app db should be updated by action
   updateLocalStorage('lists', state.lists);
 };
@@ -99,6 +98,12 @@ const editCardData = (state, { propName, updatedValue }) => {
   updateLocalStorage('lists', state.lists);
 };
 
+const reorderLists = (state, payload) => {
+  state.lists = payload;
+  // in real world app db should be updated by action
+  updateLocalStorage('lists', state.lists);
+};
+
 export default {
   setData,
   addNewList,
@@ -111,4 +116,5 @@ export default {
   hideEditCardModal,
   deleteCard,
   editCardData,
+  reorderLists,
 };
