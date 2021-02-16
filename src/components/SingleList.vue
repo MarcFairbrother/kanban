@@ -37,11 +37,9 @@ export default {
 <style lang="scss" scoped>
 .list {
   &__item {
-    background: var(--main-clr);
     border-radius: 5px;
     color: var(--scnd-clr);
     margin-bottom: 2rem;
-    padding: 2rem;
     &:last-of-type {
       margin-bottom: 0;
     }

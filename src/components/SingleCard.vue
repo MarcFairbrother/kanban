@@ -28,6 +28,9 @@ export default {
 
 <style lang="scss" scoped>
 .card {
+  background: var(--main-clr);
+  border-radius: 5px;
+  padding: 2rem;
   &:hover {
     cursor: move;
   }
