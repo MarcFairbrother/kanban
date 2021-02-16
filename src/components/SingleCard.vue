@@ -1,5 +1,12 @@
 <template>
-  <article class="card" :data-id="cardData.id" :data-list="listData">
+  <article
+    class="card"
+    :data-id="cardData.id"
+    :data-list="listData"
+    draggable="true"
+    @drag.prevent="dragElement"
+    @dragend.prevent="dragElementEnd"
+  >
     <h3 class="card__title">{{ cardData.title }}</h3>
     <p class="card__description">{{ cardData.description }}</p>
     <button
@@ -22,6 +29,12 @@ export default {
     handleEditCard(payload) {
       this.editCard(payload);
     },
+    dragElement(e) {
+      e.target.classList.add('js-dragging');
+    },
+    dragElementEnd(e) {
+      e.target.classList.remove('js-dragging');
+    },
   },
 };
 </script>
@@ -30,7 +43,13 @@ export default {
 .card {
   background: var(--main-clr);
   border-radius: 5px;
+  color: var(--scnd-clr);
+  margin-bottom: 2rem;
   padding: 2rem;
+  transition: opacity 0.25s ease-in-out;
+  &.js-dragging {
+    opacity: 0.75;
+  }
   &:hover {
     cursor: move;
   }

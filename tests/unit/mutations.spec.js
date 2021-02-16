@@ -13,6 +13,7 @@ const {
   deleteCard,
   editCardData,
   reorderLists,
+  updateListItems,
 } = mutations;
 
 describe('mutations.js', () => {
@@ -263,6 +264,49 @@ describe('mutations.js', () => {
       { title: 'baz', id: 3 },
       { title: 'foo', id: 1 },
       { title: 'bar', id: 2 },
+    ]);
+  });
+
+  // updateListItems
+  it('updates the items arrays of old and new list', () => {
+    const state = {
+      lists: [
+        {
+          id: 1,
+          items: [
+            { title: 'foo', id: 1 },
+            { title: 'bar', id: 3 },
+          ],
+        },
+        {
+          id: 7,
+          items: [
+            { title: 'baz', id: 4 },
+            { title: 'boo', id: 2 },
+          ],
+        },
+      ],
+    };
+    const payload = {
+      newParentListId: 1,
+      oldParentListId: 7,
+      cardId: 4,
+      listCardsIds: [1, 4, 3],
+    };
+    updateListItems(state, payload);
+    expect(state.lists).toEqual([
+      {
+        id: 1,
+        items: [
+          { title: 'foo', id: 1 },
+          { title: 'baz', id: 4 },
+          { title: 'bar', id: 3 },
+        ],
+      },
+      {
+        id: 7,
+        items: [{ title: 'boo', id: 2 }],
+      },
     ]);
   });
 });

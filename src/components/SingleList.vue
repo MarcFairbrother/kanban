@@ -1,6 +1,10 @@
 <template>
-  <ul class="list">
-    <li class="list__item" v-for="(item, idx) in listData.items" :key="idx">
+  <ul class="list list--cards" :data-id="listData.id">
+    <li
+      class="list__item list__item--card"
+      v-for="(item, idx) in listData.items"
+      :key="`${idx}${item.id}${listData.id}`"
+    >
       <SingleCard :card-data="item" :list-data="listData.id" />
     </li>
     <li class="list__item list__item--add">
@@ -38,10 +42,11 @@ export default {
 .list {
   &__item {
     border-radius: 5px;
-    color: var(--scnd-clr);
-    margin-bottom: 2rem;
     &:last-of-type {
       margin-bottom: 0;
+    }
+    &--add {
+      margin-bottom: 2rem;
     }
     &--add > button {
       background-image: var(--plus-icn);

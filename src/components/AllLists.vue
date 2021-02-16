@@ -6,6 +6,7 @@
       class="lists__item lists__item--list"
       :data-id="list.id"
       @drag.prevent="dragElement"
+      @dragend.prevent="dragElementEnd"
       draggable="true"
     >
       <h2 contenteditable="true" @blur="handleTitleEdit($event, list.id)" v-html="list.title"></h2>
@@ -39,40 +40,76 @@ export default {
       addNewList: 'addNewList',
       updateListTitle: 'updateListTitle',
       reorderLists: 'reorderLists',
-      setData: 'setData',
+      updateListItems: 'updateListItems',
     }),
     handleTitleEdit(e, id) {
       this.updateListTitle({ newTitle: e.target.innerText, id });
     },
     dragElement(e) {
-      this.dragging = e.target;
       e.target.classList.add('js-dragging');
     },
+    dragElementEnd(e) {
+      e.target.classList.remove('js-dragging');
+    },
     dragOverElement(e) {
+      this.dragging = document.querySelector('.js-dragging');
       if (this.dragging.classList.contains('lists__item--list')) {
         // handle list drag
         const container = document.querySelector('.lists');
+        // get list element right of cursor
         const elementRightOfCursor = this.getListRightOfCursor(container, e.clientX);
         if (elementRightOfCursor) {
+          // if element right of cursor exist insert dragged element before
           container.insertBefore(this.dragging, elementRightOfCursor);
         } else {
+          // if no element right of cursor insert dragged element before new list button
           const containerLastElementChild = container.lastElementChild;
           container.insertBefore(this.dragging, containerLastElementChild);
+        }
+      } else if (this.dragging.classList.contains('card')) {
+        // handle card drag
+        const container = e.target.closest('ul.list');
+        if (!container) return;
+        // get card element below cursor
+        const elementBelowCursor = this.getCardBelowCursor(container, e.clientY);
+        if (elementBelowCursor) {
+          // if element exists insert dragged element before
+          container.insertBefore(this.dragging, elementBelowCursor);
+        } else {
+          // if no element below cursor insert dragged element before add card button
+          const addButton = container.querySelector('.list__item--add');
+          container.insertBefore(this.dragging, addButton);
         }
       }
     },
     dropOnElement() {
-      const listIds = [...document.querySelectorAll('.lists__item--list')].map((list) => parseInt(list.dataset.id));
-      const reorderedLists = [];
-      listIds.forEach((listId) => {
-        const matchingList = this.$store.state.lists.find((list) => list.id === listId);
-        reorderedLists.push(matchingList);
-      });
-      this.reorderLists(reorderedLists);
+      if (this.dragging.classList.contains('lists__item--list')) {
+        // handle list drop
+        // get reordered list ids
+        const listIds = [...document.querySelectorAll('.lists__item--list')].map((list) => parseInt(list.dataset.id));
+        // create reordered lists array
+        const reorderedLists = [];
+        listIds.forEach((listId) => {
+          const matchingList = this.$store.state.lists.find((list) => list.id === listId);
+          reorderedLists.push(matchingList);
+        });
+        // dispatch to store
+        this.reorderLists(reorderedLists);
+      } else if (this.dragging.classList.contains('card')) {
+        // handle card drop
+        const container = this.dragging.closest('ul.list');
+        if (!container) return;
+        const listCardsIds = [...container.querySelectorAll('.card')].map((card) => parseInt(card.dataset.id));
+        const newParentListId = parseInt(container.dataset.id);
+        const oldParentListId = parseInt(this.dragging.dataset.list);
+        const cardId = parseInt(this.dragging.dataset.id);
+        this.dragging.remove();
+        this.updateListItems({ newParentListId, oldParentListId, cardId, listCardsIds });
+      }
     },
     getListRightOfCursor(container, x) {
       const draggableElements = [...container.querySelectorAll('.lists__item--list:not(.js-dragging)')];
-      // return the draggable element below the current cursor position
+      // return draggable element to right of current cursor position
       return draggableElements.reduce(
         (closest, child) => {
           const box = child.getBoundingClientRect();
@@ -86,9 +123,22 @@ export default {
         { offset: Number.NEGATIVE_INFINITY }
       ).element;
     },
-  },
-  updated() {
-    console.log('updated AllLists component');
+    getCardBelowCursor(container, y) {
+      const draggableElements = [...container.querySelectorAll('.list__item--card:not(.js-dragging)')];
+      // return draggable element below current cursor position
+      return draggableElements.reduce(
+        (closest, child) => {
+          const box = child.getBoundingClientRect();
+          const offset = y - box.top - box.height / 2;
+          if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: child };
+          } else {
+            return closest;
+          }
+        },
+        { offset: Number.NEGATIVE_INFINITY }
+      ).element;
+    },
   },
 };
 </script>
@@ -105,7 +155,11 @@ export default {
     margin-right: 2rem;
     max-width: 280px;
     padding: 2rem;
+    transition: opacity 0.25s ease-in-out;
     width: 75vw;
+    &.js-dragging {
+      opacity: 0.75;
+    }
     @include breakpoint($tablet-width) {
       margin-right: 4rem;
       width: 280px;

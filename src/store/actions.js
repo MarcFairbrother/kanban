@@ -46,6 +46,10 @@ const reorderLists = ({ commit }, payload) => {
   commit('reorderLists', payload);
 };
 
+const updateListItems = ({ commit }, payload) => {
+  commit('updateListItems', payload);
+};
+
 export default {
   setData,
   addNewList,
@@ -59,4 +63,5 @@ export default {
   deleteCard,
   editCardData,
   reorderLists,
+  updateListItems,
 };

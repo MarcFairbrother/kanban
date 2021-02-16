@@ -13,6 +13,7 @@ const {
   deleteCard,
   editCardData,
   reorderLists,
+  updateListItems,
 } = actions;
 
 describe('actions.js', () => {
@@ -112,5 +113,22 @@ describe('actions.js', () => {
       { title: 'foo', id: 1 },
       { title: 'bar', id: 2 },
     ]);
+  });
+
+  // updateListItems
+  it('commits updateListItems', () => {
+    const payload = {
+      newParentListId: 1,
+      oldParentListId: 2,
+      cardId: 1,
+      listCardsIds: [4, 2, 1],
+    };
+    updateListItems({ commit }, payload);
+    expect(commit).toHaveBeenCalledWith('updateListItems', {
+      newParentListId: 1,
+      oldParentListId: 2,
+      cardId: 1,
+      listCardsIds: [4, 2, 1],
+    });
   });
 });

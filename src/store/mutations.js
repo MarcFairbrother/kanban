@@ -105,6 +105,26 @@ const reorderLists = (state, payload) => {
   updateLocalStorage('lists', state.lists);
 };
 
+const updateListItems = (state, { newParentListId, oldParentListId, cardId, listCardsIds }) => {
+  const newParentList = state.lists.find((list) => list.id === newParentListId);
+  const oldParentList = state.lists.find((list) => list.id === oldParentListId);
+  // get and remove item from original list
+  const cardIdx = oldParentList.items.findIndex((item) => item.id === cardId);
+  const card = oldParentList.items[cardIdx];
+  oldParentList.items.splice(cardIdx, 1);
+  // push item to new list
+  newParentList.items.push(card);
+  // reorder newlist
+  const reorderedCards = [];
+  listCardsIds.forEach((id) => {
+    const matchingCard = newParentList.items.find((item) => item.id === id);
+    reorderedCards.push(matchingCard);
+  });
+  newParentList.items = reorderedCards;
+  // in real world app db should be updated by action
+  updateLocalStorage('lists', state.lists);
+};
+
 export default {
   setData,
   addNewList,
@@ -118,4 +138,5 @@ export default {
   deleteCard,
   editCardData,
   reorderLists,
+  updateListItems,
 };
