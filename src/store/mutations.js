@@ -43,11 +43,16 @@ const closeNewCardForm = (state) => {
 };
 
 const createNewCard = (state, payload) => {
+  const existingCards = [];
+  state.lists.forEach((list) => {
+    existingCards.push(...list.items);
+  });
+  const existingCardIds = existingCards.map((card) => card.id);
   state.lists.forEach((list) => {
     // find target list
     if (list.id === state.selectedList) {
       // set id of new card to last in list
-      payload.id = list.items.length + 1;
+      payload.id = Math.max(...existingCardIds) + 1;
       // push new card to target list
       list.items.push(payload);
     }
@@ -74,10 +79,6 @@ const deleteCard = (state) => {
       const idx = list.items.map((item) => item.id).indexOf(state.targetCardId);
       // delete card
       list.items.splice(idx, 1);
-      // decrement id prop of cards with higher id
-      list.items.forEach((item) => {
-        item.id > idx ? item.id-- : null;
-      });
     }
   });
   // in real world app db should be updated by action

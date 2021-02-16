@@ -120,7 +120,7 @@ describe('mutations.js', () => {
         {
           title: 'Baz',
           id: 2,
-          items: [{ title: 'Far', description: 'The first card in the second list', id: 1 }],
+          items: [{ title: 'Far', description: 'The first card in the second list', id: 2 }],
         },
       ],
       selectedList: 1,
@@ -137,13 +137,13 @@ describe('mutations.js', () => {
         id: 1,
         items: [
           { title: 'Bar', description: 'The first card in the first list', id: 1 },
-          { title: 'Boo', description: 'The second card in the first list', id: 2 },
+          { title: 'Boo', description: 'The second card in the first list', id: 3 },
         ],
       },
       {
         title: 'Baz',
         id: 2,
-        items: [{ title: 'Far', description: 'The first card in the second list', id: 1 }],
+        items: [{ title: 'Far', description: 'The first card in the second list', id: 2 }],
       },
     ]);
   });
@@ -198,10 +198,10 @@ describe('mutations.js', () => {
           id: 1,
           items: [
             { title: 'foo', id: 1 },
-            { title: 'bar', id: 2 },
+            { title: 'bar', id: 3 },
           ],
         },
-        { id: 2, items: [{ title: 'baz', id: 1 }] },
+        { id: 2, items: [{ title: 'baz', id: 2 }] },
       ],
       targetCardId: 1,
       targetCardList: 1,
@@ -209,8 +209,8 @@ describe('mutations.js', () => {
 
     deleteCard(state);
     expect(state.lists).toEqual([
-      { id: 1, items: [{ title: 'bar', id: 1 }] },
-      { id: 2, items: [{ title: 'baz', id: 1 }] },
+      { id: 1, items: [{ title: 'bar', id: 3 }] },
+      { id: 2, items: [{ title: 'baz', id: 2 }] },
     ]);
   });
 
