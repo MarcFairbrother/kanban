@@ -52,7 +52,7 @@ export default {
       this.setData([
         {
           title: 'My List',
-          position: '1',
+          position: 1,
           items: [
             {
               title: 'An example card',
