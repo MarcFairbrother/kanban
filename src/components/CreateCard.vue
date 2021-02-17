@@ -66,6 +66,9 @@ export default {
       this.closeNewCardForm();
     },
   },
+  mounted() {
+    document.querySelector('input').focus();
+  },
 };
 </script>
 
@@ -114,6 +117,11 @@ export default {
       height: 4rem;
       padding: 0 1rem;
       width: 100%;
+      &:focus {
+        background: var(--acnt-clr);
+        background: var(--main-clr);
+        color: var(--scnd-clr);
+      }
     }
   }
   &__error {
@@ -132,23 +140,24 @@ export default {
       margin: 4rem 0;
     }
     & > button {
+      background: none;
+      border: solid 1px var(--main-clr);
       border-radius: 5px;
       color: var(--main-clr);
       cursor: pointer;
       line-height: 4rem;
       padding: 0 2rem;
+      transition: background-color 0.25s ease-in-out;
       &[type='submit'] {
-        background: var(--acnt-clr);
-        border: solid 1px var(--main-clr);
         margin-right: 2rem;
         &:disabled {
           cursor: not-allowed;
           opacity: 0.25;
         }
       }
-      &[type='button'] {
-        background: none;
-        border: solid 1px var(--main-clr);
+      &:focus,
+      &:hover {
+        background: var(--acnt-clr);
       }
     }
   }

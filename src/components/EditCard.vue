@@ -86,6 +86,13 @@ export default {
   &__description {
     font-size: 1.6rem;
   }
+  &__title,
+  &__description {
+    &:focus {
+      outline: solid 1px var(--main-clr);
+      outline-offset: 4px;
+    }
+  }
   &__buttons {
     margin: 2rem 0;
     text-align: center;
@@ -93,21 +100,22 @@ export default {
       margin: 4rem 0;
     }
     & > button {
+      background: none;
+      border: solid 1px var(--main-clr);
       border-radius: 5px;
       color: var(--main-clr);
       cursor: pointer;
       line-height: 4rem;
       padding: 0 2rem;
+      transition: background-color 0.25s ease-in-out;
+      &:focus,
+      &:hover {
+        background: var(--acnt-clr);
+      }
     }
   }
   &__save {
-    background: var(--acnt-clr);
-    border: solid 1px var(--main-clr);
     margin-right: 2rem;
-  }
-  &__delete {
-    background: none;
-    border: solid 1px var(--main-clr);
   }
   &__disclaimer {
     font-size: 1.2rem;

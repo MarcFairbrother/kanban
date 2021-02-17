@@ -169,6 +169,10 @@ export default {
       cursor: text;
       font-size: 2.4rem;
       margin: 0 2rem 2rem;
+      &:focus {
+        outline: solid 1px var(--main-clr);
+        outline-offset: 4px;
+      }
     }
     &--add {
       cursor: initial;
