@@ -61,6 +61,29 @@ label {
   margin: 0;
 }
 
+footer {
+  background: #444748;
+  padding: 2rem;
+  @include breakpoint($tablet-width) {
+    padding: 2rem 4rem;
+  }
+  & > p {
+    color: var(--scnd-clr);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    & > a {
+      color: var(--scnd-clr);
+      transition: color 0.25s ease-in-out;
+      &:hover {
+        color: var(--acnt-clr);
+      }
+    }
+  }
+}
+
 button,
 input {
   font-family: inherit;
