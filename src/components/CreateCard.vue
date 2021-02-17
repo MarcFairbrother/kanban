@@ -1,5 +1,5 @@
 <template>
-  <section class="create">
+  <section class="create" @click="handleClickOutside">
     <form class="create__modal" @submit.prevent="handleSubmitFormClick" action="/" name="newCard">
       <div class="create__field">
         <label for="title">Title:</label>
@@ -64,6 +64,11 @@ export default {
       };
       this.createNewCard(payload);
       this.closeNewCardForm();
+    },
+    handleClickOutside(e) {
+      if (e.target === e.currentTarget) {
+        this.closeNewCardForm();
+      }
     },
   },
   mounted() {

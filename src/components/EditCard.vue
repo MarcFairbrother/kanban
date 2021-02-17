@@ -1,5 +1,5 @@
 <template>
-  <section class="edit">
+  <section class="edit" @click="handleClickOutside">
     <article class="edit__modal">
       <h2
         class="edit__title"
@@ -43,6 +43,11 @@ export default {
     },
     handleEditCardData(e, propName) {
       this.editCardData({ updatedValue: e.target.innerText, propName });
+    },
+    handleClickOutside(e) {
+      if (e.target === e.currentTarget) {
+        this.hideEditCardModal();
+      }
     },
   },
 };
