@@ -72,7 +72,8 @@ export default {
     },
   },
   mounted() {
-    document.querySelector('input').focus();
+    const element = document.querySelector('input');
+    element ? element.focus() : null;
   },
 };
 </script>
