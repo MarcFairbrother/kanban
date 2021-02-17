@@ -103,6 +103,7 @@ export default {
         const newParentListId = parseInt(container.dataset.id);
         const oldParentListId = parseInt(this.dragging.dataset.list);
         const cardId = parseInt(this.dragging.dataset.id);
+        if (newParentListId === oldParentListId) return;
         this.dragging.remove();
         this.updateListItems({ newParentListId, oldParentListId, cardId, listCardsIds });
       }
