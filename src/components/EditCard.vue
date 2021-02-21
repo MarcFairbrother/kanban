@@ -6,6 +6,7 @@
         contenteditable="true"
         @blur="handleEditCardData($event, 'title')"
         v-html="card.title"
+        @keydown="handleTitleKeydown"
       ></h2>
       <p
         class="edit__description"
@@ -15,7 +16,9 @@
       ></p>
       <div class="edit__buttons">
         <button class="edit__save js-hideEditCardModal" @click="handleHideEditCardModal">Done</button>
-        <button class="edit__delete js-deleteCard" @click="handleDeleteCard">Delete</button>
+        <button class="edit__delete js-deleteCard" @click="handleDeleteCard" @keydown="handleDeleteKeydown">
+          Delete
+        </button>
       </div>
       <p class="edit__disclaimer">
         This is a demo app, please do not use for other purposes. Data is saved to your browser's local storage only.
@@ -45,11 +48,47 @@ export default {
     handleEditCardData(e, propName) {
       this.editCardData({ updatedValue: sanitize(e.target.innerText), propName });
     },
+    handleTitleKeydown(e) {
+      if (e.key === 'Tab' && e.shiftKey) {
+        e.preventDefault();
+        // focus on last modal button
+        const element = document.querySelector('.js-deleteCard');
+        element ? element.focus() : null;
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        // focus on the description form field
+        const element = document.querySelector('.edit__description');
+        element ? element.focus() : null;
+      }
+    },
+    handleDeleteKeydown(e) {
+      if (e.key === 'Tab' && !e.shiftKey) {
+        e.preventDefault();
+        // focus on first modal input
+        const element = document.querySelector('.edit__title');
+        element ? element.focus() : null;
+      }
+    },
     handleClickOutside(e) {
       if (e.target === e.currentTarget) {
         this.hideEditCardModal();
       }
     },
+  },
+  mounted() {
+    // focus on first modal element
+    const element = document.querySelector('.edit__title');
+    element ? element.focus() : null;
+  },
+  destroyed() {
+    if (this.card) {
+      // focus on element edit button
+      const element = document.querySelector(`article.card[data-id="${this.card.id}"]`);
+      element.querySelector('button').focus();
+    } else {
+      // if element was deleted focus on first list title
+      document.querySelector('ul h2').focus();
+    }
   },
 };
 </script>

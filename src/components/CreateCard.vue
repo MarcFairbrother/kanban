@@ -3,7 +3,13 @@
     <form class="create__modal" @submit.prevent="handleSubmitFormClick" action="/" name="newCard">
       <div class="create__field">
         <label for="title">Title:</label>
-        <input id="title" type="text" v-model="$v.newCard.title.$model" @blur="$v.newCard.title.$touch()" />
+        <input
+          id="title"
+          type="text"
+          v-model="$v.newCard.title.$model"
+          @blur="$v.newCard.title.$touch()"
+          @keydown="handleTitleKeydown"
+        />
         <p class="create__error" v-if="$v.newCard.title.$error">Please enter a title</p>
       </div>
       <div class="create__field">
@@ -19,7 +25,9 @@
       </div>
       <div class="create__buttons">
         <button type="submit" :disabled="$v.newCard.$invalid">Submit</button>
-        <button class="js-closeForm" @click="handleCloseFormClick" type="button">Cancel</button>
+        <button class="js-closeForm" @click="handleCloseFormClick" @keydown="handleCancelKeydown" type="button">
+          Cancel
+        </button>
       </div>
       <p class="create__disclaimer">
         This is a demo app, please do not use for other purposes. Data is saved to your browser's local storage only.
@@ -66,6 +74,27 @@ export default {
       this.createNewCard(payload);
       this.closeNewCardForm();
     },
+    handleTitleKeydown(e) {
+      if (e.key === 'Tab' && e.shiftKey) {
+        e.preventDefault();
+        // focus on last modal button
+        const element = document.querySelector('.js-closeForm');
+        element ? element.focus() : null;
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        // focus on the description form field
+        const element = document.querySelector('textarea');
+        element ? element.focus() : null;
+      }
+    },
+    handleCancelKeydown(e) {
+      if (e.key === 'Tab' && !e.shiftKey) {
+        e.preventDefault();
+        // focus on first modal input
+        const element = document.querySelector('input');
+        element ? element.focus() : null;
+      }
+    },
     handleClickOutside(e) {
       if (e.target === e.currentTarget) {
         this.closeNewCardForm();
@@ -73,8 +102,13 @@ export default {
     },
   },
   mounted() {
+    // focus on first modal input
     const element = document.querySelector('input');
     element ? element.focus() : null;
+  },
+  destroyed() {
+    const list = document.querySelector(`.lists__item--list[data-id="${this.$store.state.selectedList}"]`);
+    list.querySelector('.list__item--add button').focus();
   },
 };
 </script>
