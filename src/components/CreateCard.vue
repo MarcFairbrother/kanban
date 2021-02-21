@@ -8,12 +8,13 @@
       </div>
       <div class="create__field">
         <label for="description">Description:</label>
-        <input
+        <textarea
           id="description"
           type="text"
           v-model="$v.newCard.description.$model"
           @blur="$v.newCard.description.$touch()"
-        />
+          rows="3"
+        ></textarea>
         <p class="create__error" v-if="$v.newCard.description.$error">Please enter a description</p>
       </div>
       <div class="create__buttons">
@@ -124,7 +125,18 @@ export default {
       padding: 0 1rem;
       width: 100%;
       &:focus {
-        background: var(--acnt-clr);
+        background: var(--main-clr);
+        color: var(--scnd-clr);
+      }
+    }
+    & textarea {
+      background: var(--scnd-clr);
+      border: solid 1px var(--main-clr);
+      color: var(--main-clr);
+      font-size: 1.6rem;
+      padding: 1rem;
+      width: 100%;
+      &:focus {
         background: var(--main-clr);
         color: var(--scnd-clr);
       }
