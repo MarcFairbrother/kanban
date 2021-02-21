@@ -21,6 +21,7 @@
 <script>
 import SingleList from '@/components/SingleList.vue';
 import { mapActions, mapGetters } from 'vuex';
+import { sanitize } from 'dompurify';
 
 export default {
   name: 'AllLists',
@@ -43,7 +44,7 @@ export default {
       updateListItems: 'updateListItems',
     }),
     handleTitleEdit(e, id) {
-      this.updateListTitle({ newTitle: e.target.innerText, id });
+      this.updateListTitle({ newTitle: sanitize(e.target.innerText), id });
     },
     dragElement(e) {
       e.target.classList.add('js-dragging');
