@@ -26,6 +26,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { sanitize } from 'dompurify';
 
 export default {
   name: 'EditCard',
@@ -42,7 +43,7 @@ export default {
       this.hideEditCardModal();
     },
     handleEditCardData(e, propName) {
-      this.editCardData({ updatedValue: e.target.innerText, propName });
+      this.editCardData({ updatedValue: sanitize(e.target.innerText), propName });
     },
     handleClickOutside(e) {
       if (e.target === e.currentTarget) {
